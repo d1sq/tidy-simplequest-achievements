@@ -2,7 +2,7 @@
   "id": "simple-quest-tidy-achievements",
   "title": "Simple Quest - Tidy 5e Achievements Tab",
   "description": "Adds an Achievements tab to Tidy 5e character sheets, populated from the Simple Quest achievements journal.",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "authors": [{ "name": "d1sq", "github": "d1sq" }],
   "compatibility": { "minimum": "13", "verified": "14" },
   "esmodules": ["scripts/main.js"],
@@ -21,12 +21,12 @@
     ],
     "conflicts": []
   },
-  "url": "https://github.com/d1sq/simple-quest-tidy-achievements",
-  "manifest": "https://github.com/d1sq/simple-quest-tidy-achievements/releases/latest/download/module.json",
-  "download": "https://github.com/d1sq/simple-quest-tidy-achievements/releases/download/v0.1.1/module.zip",
-  "readme": "https://github.com/d1sq/simple-quest-tidy-achievements/blob/main/README.md",
-  "bugs": "https://github.com/d1sq/simple-quest-tidy-achievements/issues",
-  "changelog": "https://github.com/d1sq/simple-quest-tidy-achievements/releases",
+  "url": "https://github.com/d1sq/tidy-simplequest-achievements",
+  "manifest": "https://github.com/d1sq/tidy-simplequest-achievements/releases/latest/download/module.json",
+  "download": "https://github.com/d1sq/tidy-simplequest-achievements/releases/latest/download/module.zip",
+  "readme": "https://github.com/d1sq/tidy-simplequest-achievements/blob/master/README.md",
+  "bugs": "https://github.com/d1sq/tidy-simplequest-achievements/issues",
+  "changelog": "https://github.com/d1sq/tidy-simplequest-achievements/releases",
   "flags": {
     "allowBugReporter": true
   },

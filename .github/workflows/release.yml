@@ -1,0 +1,56 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Read version from module.json
+        id: version
+        run: |
+          version=$(jq -r '.version' module.json)
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=v$version" >> "$GITHUB_OUTPUT"
+
+      - name: Check if release already exists
+        id: tag-check
+        run: |
+          if git rev-parse "refs/tags/${{ steps.version.outputs.tag }}" >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "Tag ${{ steps.version.outputs.tag }} already exists, skipping release."
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Inject download URL into module.json
+        if: steps.tag-check.outputs.exists == 'false'
+        run: |
+          download="https://github.com/${{ github.repository }}/releases/download/${{ steps.version.outputs.tag }}/module.zip"
+          jq --arg url "$download" '.download = $url' module.json > module.json.tmp
+          mv module.json.tmp module.json
+
+      - name: Build module.zip
+        if: steps.tag-check.outputs.exists == 'false'
+        run: zip -r module.zip module.json scripts styles templates languages README.md
+
+      - name: Create release
+        if: steps.tag-check.outputs.exists == 'false'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: ${{ steps.version.outputs.tag }}
+          files: |
+            module.json
+            module.zip

@@ -2,7 +2,7 @@
   "id": "simple-quest-tidy-achievements",
   "title": "Simple Quest – Tidy 5e Achievements Tab",
   "description": "Adds an Achievements tab to Tidy 5e character sheets, populated from the Simple Quest achievements journal.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "authors": [{ "name": "d1sq" }],
   "compatibility": { "minimum": "13", "verified": "14" },
   "esmodules": ["scripts/main.js"],
@@ -17,5 +17,7 @@
       { "id": "tidy5e-sheet", "type": "module" }
     ]
   },
+  "url": "https://github.com/d1sq/simple-quest-tidy-achievements",
+  "manifest": "https://github.com/d1sq/simple-quest-tidy-achievements/releases/latest/download/module.json",
   "protected": false
 }

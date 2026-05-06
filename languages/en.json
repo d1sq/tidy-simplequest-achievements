@@ -1,0 +1,16 @@
+{
+  "simple-quest-tidy-achievements": {
+    "tab": {
+      "title": "Achievements"
+    },
+    "empty": {
+      "noUser": "This actor is not linked to any player.",
+      "noJournal": "Simple Quest achievements journal not found.",
+      "noAchievements": "No achievements yet."
+    },
+    "hidden": {
+      "name": "???",
+      "description": "This achievement is still hidden."
+    }
+  }
+}

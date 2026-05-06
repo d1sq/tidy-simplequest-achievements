@@ -1,0 +1,26 @@
+{{#if selected}}
+    <div class="sqta-detail" style="{{#if selected.color}}--sqta-accent: {{selected.color}};{{/if}}">
+        <div class="sqta-detail-header">
+            <h2 class="sqta-detail-title flexrow">
+                <span class="flex1">{{selected.name}}</span>
+                <button type="button"
+                        class="sqta-detail-close"
+                        aria-label="{{localize 'Close'}}"
+                        data-tooltip="{{localize 'Close'}}">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </h2>
+            <tidy-gold-header-underline></tidy-gold-header-underline>
+        </div>
+        <div class="sqta-detail-body">
+            {{#if selected.img}}
+                <div class="sqta-detail-img-wrap">
+                    <img class="sqta-detail-img" src="{{selected.img}}" alt="{{selected.name}}" />
+                </div>
+            {{/if}}
+            <div class="sqta-detail-description user-select-text">
+                {{{selected.description}}}
+            </div>
+        </div>
+    </div>
+{{/if}}

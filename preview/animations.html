@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Text Animation Preview</title>
+<style>
+    :root {
+        --bg: #1a1b1f;
+        --panel: #26282e;
+        --border: rgba(255, 255, 255, 0.08);
+        --text: #e4e6eb;
+        --muted: #9aa0a6;
+        --accent: #c0ad81;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+        margin: 0;
+        padding: 2rem;
+        font-family: 'Segoe UI', Roboto, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+    }
+
+    h1 {
+        margin: 0 0 1.5rem;
+        font-weight: 500;
+        color: var(--accent);
+    }
+
+    .hint {
+        color: var(--muted);
+        margin-bottom: 2rem;
+        line-height: 1.5;
+    }
+
+    .hint code {
+        background: rgba(255, 255, 255, 0.08);
+        padding: 0.1rem 0.4rem;
+        border-radius: 3px;
+        color: #f0d8a8;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
+        gap: 1rem;
+    }
+
+    .card {
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--panel);
+        padding: 1.25rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .card-title {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+        margin: 0;
+    }
+
+    .preview {
+        min-height: 4rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 4px;
+        font-size: 1.4rem;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    .snippet {
+        font-family: 'Consolas', 'Courier New', monospace;
+        font-size: 0.78rem;
+        background: rgba(0, 0, 0, 0.4);
+        color: #a8c8ff;
+        padding: 0.5rem 0.7rem;
+        border-radius: 4px;
+        user-select: all;
+        cursor: text;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    /* ========== 1. GLOW ========== */
+    @keyframes sqt-glow {
+        0%, 100% { text-shadow: 0 0 6px currentColor, 0 0 12px currentColor; }
+        50%      { text-shadow: 0 0 16px currentColor, 0 0 28px currentColor; }
+    }
+    .sqt-glow {
+        color: #ffd76a;
+        animation: sqt-glow 2s ease-in-out infinite;
+    }
+
+    /* ========== 2. COLOR CYCLE ========== */
+    @keyframes sqt-color {
+        0%   { color: #ff5d6c; text-shadow: 0 0 10px rgba(255, 93, 108, 0.5); }
+        25%  { color: #ffce4a; text-shadow: 0 0 10px rgba(255, 206, 74, 0.5); }
+        50%  { color: #5dffac; text-shadow: 0 0 10px rgba(93, 255, 172, 0.5); }
+        75%  { color: #5db5ff; text-shadow: 0 0 10px rgba(93, 181, 255, 0.5); }
+        100% { color: #ff5d6c; text-shadow: 0 0 10px rgba(255, 93, 108, 0.5); }
+    }
+    .sqt-color {
+        animation: sqt-color 5s linear infinite;
+    }
+
+    /* ========== 3. HEARTBEAT ========== */
+    @keyframes sqt-heartbeat {
+        0%, 40%, 100% { transform: scale(1); }
+        10%, 30%      { transform: scale(1.18); }
+        20%           { transform: scale(1.05); }
+    }
+    .sqt-heartbeat {
+        display: inline-block;
+        color: #ff5d7a;
+        text-shadow: 0 0 10px rgba(255, 93, 122, 0.55);
+        animation: sqt-heartbeat 1.4s ease-in-out infinite;
+    }
+
+    /* ========== 4. RAINBOW ========== */
+    @keyframes sqt-rainbow {
+        0%   { background-position: 0% 50%; }
+        100% { background-position: 200% 50%; }
+    }
+    .sqt-rainbow {
+        background: linear-gradient(90deg, #ff4e4e, #ffb84e, #fff84e, #4eff7b, #4ec4ff, #a24eff, #ff4eaa, #ff4e4e);
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        animation: sqt-rainbow 4s linear infinite;
+    }
+
+    /* ========== 5. FROST ========== */
+    @keyframes sqt-frost {
+        0%, 100% {
+            color: #d6f0ff;
+            text-shadow: 0 0 6px #79c8ff, 0 0 12px rgba(121, 200, 255, 0.5);
+        }
+        50% {
+            color: #ffffff;
+            text-shadow: 0 0 12px #b6e3ff, 0 0 24px rgba(121, 200, 255, 0.85), 0 0 40px rgba(121, 200, 255, 0.4);
+        }
+    }
+    .sqt-frost {
+        animation: sqt-frost 3s ease-in-out infinite;
+    }
+
+    /* ========== 6. FIRE ========== */
+    @keyframes sqt-fire {
+        0%, 100% {
+            background-position: 0 0;
+            text-shadow: 0 0 8px rgba(255, 90, 0, 0.7), 0 0 16px rgba(255, 50, 0, 0.4);
+        }
+        50% {
+            background-position: 0 100%;
+            text-shadow: 0 0 14px rgba(255, 160, 0, 0.85), 0 0 24px rgba(255, 80, 0, 0.55);
+        }
+    }
+    .sqt-fire {
+        background: linear-gradient(180deg, #fff39a 0%, #ffb347 30%, #ff5a1f 70%, #b71d1d 100%);
+        background-size: 100% 200%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        animation: sqt-fire 2.2s ease-in-out infinite;
+    }
+
+    /* ========== 7. FLICKER ========== */
+    @keyframes sqt-flicker {
+        0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+            opacity: 0.99;
+            text-shadow: 0 0 4px #fff, 0 0 11px #ffb347, 0 0 19px #ff8a00;
+        }
+        20%, 24%, 55% { opacity: 0.4; text-shadow: none; }
+    }
+    .sqt-flicker {
+        color: #ffd9a0;
+        animation: sqt-flicker 3s linear infinite;
+    }
+
+    /* ========== 8. SHIMMER ========== */
+    @keyframes sqt-shimmer {
+        0%   { background-position: -150% 0; }
+        100% { background-position: 250% 0; }
+    }
+    .sqt-shimmer {
+        background: linear-gradient(100deg, #8a7948 0%, #8a7948 35%, #fff4c2 50%, #8a7948 65%, #8a7948 100%);
+        background-size: 250% 100%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        animation: sqt-shimmer 3.5s linear infinite;
+    }
+
+    /* ========== 9. ECHO ========== */
+    @keyframes sqt-echo {
+        0%, 100% {
+            text-shadow:
+                2px 0 0 rgba(255, 50, 100, 0.7),
+                -2px 0 0 rgba(50, 200, 255, 0.7);
+        }
+        50% {
+            text-shadow:
+                10px 0 8px rgba(255, 50, 100, 0.55),
+                -10px 0 8px rgba(50, 200, 255, 0.55);
+        }
+    }
+    .sqt-echo {
+        display: inline-block;
+        color: #ffffff;
+        font-weight: 700;
+        animation: sqt-echo 2.4s ease-in-out infinite;
+    }
+
+    /* ========== 10. NEON ========== */
+    @keyframes sqt-neon {
+        0%, 100% {
+            text-shadow:
+                0 0 4px #fff,
+                0 0 8px #fff,
+                0 0 14px #ff2e88,
+                0 0 22px #ff2e88,
+                0 0 34px #ff2e88;
+        }
+        50% {
+            text-shadow:
+                0 0 2px #fff,
+                0 0 4px #fff,
+                0 0 7px #ff2e88,
+                0 0 12px #ff2e88,
+                0 0 20px #ff2e88;
+        }
+    }
+    .sqt-neon {
+        color: #fff;
+        animation: sqt-neon 1.8s ease-in-out infinite;
+    }
+</style>
+</head>
+<body>
+
+<h1>Превью анимаций текста</h1>
+<p class="hint">
+    Наведи курсор на строчку кода и кликни — она сразу выделится, можно скопировать.<br>
+    В описании достижения переключись в режим <code>&lt;/&gt;</code> (HTML source) и вставь код.<br>
+    Классы нужно будет потом добавить в <code>styles/module.css</code> модуля — иначе в Foundry они не сработают.
+</p>
+
+<div class="grid">
+
+    <div class="card">
+        <p class="card-title">1. Glow — свечение</p>
+        <div class="preview"><span class="sqt-glow">Эпичное достижение</span></div>
+        <div class="snippet">&lt;span class="sqt-glow"&gt;Эпичное достижение&lt;/span&gt;</div>
+    </div>
+
+    <div class="card">
+        <p class="card-title">2. Color cycle — смена цветов</p>
+        <div class="preview"><span class="sqt-color">Хамелеон</span></div>
+        <div class="snippet">&lt;span class="sqt-color"&gt;Хамелеон&lt;/span&gt;</div>
+    </div>
+
+    <div class="card">
+        <p class="card-title">3. Heartbeat — сердцебиение</p>
+        <div class="preview"><span class="sqt-heartbeat">Жив ❤</span></div>
+        <div class="snippet">&lt;span class="sqt-heartbeat"&gt;Жив ❤&lt;/span&gt;</div>
+    </div>
+
+    <div class="card">
+        <p class="card-title">4. Rainbow — радужный градиент</p>
+        <div class="preview"><span class="sqt-rainbow">Легендарно</span></div>
+        <div class="snippet">&lt;span class="sqt-rainbow"&gt;Легендарно&lt;/span&gt;</div>
+    </div>
+
+    <div class="card">
+        <p class="card-title">5. Frost — морозное свечение</p>
+        <div class="preview"><span class="sqt-frost">❄ Заморожен ❄</span></div>
+        <div class="snippet">&lt;span class="sqt-frost"&gt;❄ Заморожен ❄&lt;/span&gt;</div>
+    </div>
+
+    <div class="card">
+        <p class="card-title">6. Fire — огненный градиент</p>
+        <div class="preview"><span class="sqt-fire">ВЫЖИГАЕТ</span></div>
+        <div class="snippet">&lt;span class="sqt-fire"&gt;ВЫЖИГАЕТ&lt;/span&gt;</div>
+    </div>
+
+    <div class="card">
+        <p class="card-title">7. Flicker — мерцающая лампа</p>
+        <div class="preview"><span class="sqt-flicker">Проклятие</span></div>
+        <div class="snippet">&lt;span class="sqt-flicker"&gt;Проклятие&lt;/span&gt;</div>
+    </div>
+
+    <div class="card">
+        <p class="card-title">8. Shimmer — металлический блеск</p>
+        <div class="preview"><span class="sqt-shimmer">Золотой трофей</span></div>
+        <div class="snippet">&lt;span class="sqt-shimmer"&gt;Золотой трофей&lt;/span&gt;</div>
+    </div>
+
+    <div class="card">
+        <p class="card-title">9. Echo — цветное двоение (3D-эффект)</p>
+        <div class="preview"><span class="sqt-echo">Эхо</span></div>
+        <div class="snippet">&lt;span class="sqt-echo"&gt;Эхо&lt;/span&gt;</div>
+    </div>
+
+    <div class="card">
+        <p class="card-title">10. Neon — неоновая вывеска</p>
+        <div class="preview"><span class="sqt-neon">КАЗИНО</span></div>
+        <div class="snippet">&lt;span class="sqt-neon"&gt;КАЗИНО&lt;/span&gt;</div>
+    </div>
+
+</div>
+
+</body>
+</html>

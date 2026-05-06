@@ -1,0 +1,16 @@
+{
+  "simple-quest-tidy-achievements": {
+    "tab": {
+      "title": "Достижения"
+    },
+    "empty": {
+      "noUser": "Этот персонаж не привязан к игроку.",
+      "noJournal": "Журнал достижений Simple Quest не найден.",
+      "noAchievements": "Достижений пока нет."
+    },
+    "hidden": {
+      "name": "???",
+      "description": "Это достижение ещё скрыто."
+    }
+  }
+}

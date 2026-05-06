@@ -1,0 +1,26 @@
+<div class="sqta-tab">
+    {{#if sqta.empty}}
+        <div class="empty-state-container sqta-empty">
+            <i class="fa-solid fa-trophy"></i>
+            <p>{{localize sqta.emptyKey}}</p>
+        </div>
+    {{else}}
+        <div class="sqta-grid">
+            {{#each sqta.achievements}}
+                <button type="button"
+                        class="sqta-card {{#if this.isHidden}}hidden{{/if}} {{#if this.isAwarded}}awarded{{/if}} {{#if this.active}}active{{/if}}"
+                        data-uuid="{{this.uuid}}"
+                        style="{{#if this.color}}--sqta-accent: {{this.color}};{{/if}}">
+                    <div class="sqta-card-img-wrap">
+                        <img class="sqta-card-img" src="{{this.img}}" alt="" />
+                        {{#if this.isHidden}}
+                            <i class="fa-solid fa-lock sqta-card-lock"></i>
+                        {{/if}}
+                    </div>
+                    <div class="sqta-card-name">{{this.name}}</div>
+                </button>
+            {{/each}}
+        </div>
+        <div class="sqta-detail-slot"></div>
+    {{/if}}
+</div>
